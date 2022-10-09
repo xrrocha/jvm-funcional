@@ -34,12 +34,12 @@ En lugar de persistir las entidades de dominio como tales (como se hace, típica
 enfoque de imagen en memoria lo que se persiste es la secuencia de eventos de aplicación que modifican el estado de
 las entidades.
 
-Considere el siguiente modelo de dominio bancario minimalista:
+Consideremos el siguiente modelo de dominio bancario minimalista:
 
 ![dominio banco](docs/img/dominio-banco.png)
 
-Aquí, un banco tiene una colección de cuentas, cada una con un balance que cambia en el tiempo a medida que responde a
-eventos de mutación del balance tales como:
+Aquí, un banco consta de una colección de cuentas, cada una con un balance que cambia en el tiempo a medida que 
+responde a eventos de mutación del balance tales como:
 
 - Depósitos
 - Retiros
@@ -65,7 +65,7 @@ La idea clave detrás del patrón de imagen en memoria es:
 > 2. Reconstruir el estado de la aplicación en memoria aplicando a un estado inicial vacío, en orden, todas las
      > mutaciones serializadas
 
-Algo paradójicamente, las clases de entidad como tales nunca se persisten! (Pero puede serializadas cuando se les
+Algo paradójicamente, las clases de entidad como tales nunca se persisten! (Pero puede serializarse cuando se les
 toman "fotografías instantáneas" como se comenta más abajo).
 
 Si los datos de la aplicación caben en la memoria y la historia de mutaciones cabe en el disco entonces es posible
@@ -74,7 +74,7 @@ tomar ventaja de la imagen en memoria.
 ### Procesador de Imagen en Memoria
 
 Un _procesador de imagen en memoria_ consume una secuencia de mutaciones aplicándolas sucesivamente a un objeto
-mutable en memoria (al que llamaremos _sistema_ empleando la terminología introducida por los pioneros de
+mutable en memoria (al que llamaremos el _sistema_ empleando la terminología introducida por los pioneros de
 [Prevayler](https://prevayler.org)).
 
 ![kmemimg-1](docs/img/kmemimg-1.png)

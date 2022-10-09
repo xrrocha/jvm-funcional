@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>quito-lambda</groupId>
-    <artifactId>jvm-funcional</artifactId>
+    <artifactId>intro</artifactId>
     <version>${revision}</version>
 
     <packaging>jar</packaging>

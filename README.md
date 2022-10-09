@@ -10,7 +10,7 @@ El ejemplo en Java es un
 [lenguaje de dominio específico](java/) (DSL) que simplifica el uso de repositorios JPA en aplicaciones SpringBoot.
 El ejemplo en Kotlin es una implementación del 
 [patrón arquitectónico Memory Image](kotlin/).
-El ejemplo en Scala es un [_framework_ de transferencia de datos](scala/).
+El ejemplo en Scala es un [_framework_ de transferencia de datos](scala-srecords/).
 
 ## Plataforma Java: Lenguaje, Máquina Virtual y Ecosistema
 

@@ -7,8 +7,9 @@
 .atico/
 .gradle
 .idea/
+.sbt/
 build/
 gradle/
+gradlew*
 out/
 target/
-gradlew*

@@ -125,8 +125,8 @@ public class Departamento extends Entidad {
 }
 ```
 👉 Este repositorio ilustra también otros aspectos de implementación de JPA que pueden ser de interés para el lector 
-más allá del DSL. Esto incluye soporte genérico a enumeraciones, generación de identificadores desde la aplicación y 
-otros temas más...
+más allá del DSL. Esto incluye soporte genérico a enumeraciones, generación de identificadores desde la aplicación, 
+envoltura de repositorios JPA en español y otros temas más...
 
 
 ### Insertando una Nueva Instancia de Entidad (Toma 1)
@@ -220,9 +220,9 @@ CREATE TABLE empleado (
 
 Para impedir que se añadan nuevas instancias con valores duplicados de clave natural:
 
-- Se añade una restricción `UNIQUE` en la(s) columna(s) de la tabla
+- Se añade una restricción `UNIQUE` en la(s) columna(s) de la clave natural
 - Se añade una anotación `@Table/@UniqueConstraint` a la entidad JPA 
-- Se verifica en la aplicación Spring que no exista ya en la tabla una fila con el mismo valor
+- Se verifica en la aplicación Spring que no exista ya en la tabla una fila con el mismo valor de clave natural
 
 👉 En nuestro repositorio de ejemplo hemos establecido la simplificación de que todas las claves primarias sintéticas
 son de tipo `String` y corresponden a un _random `UUID`_ generado desde la aplicación.
@@ -336,6 +336,7 @@ public static<E, I> I persistirInstancia(
     return clavePrimaria.apply(entidadGuardada);
 }
 
+// Este método sintetiza y retorna una nueva función (high-order)
 public static <E, C> Consumer<E> detectarDuplicado(Function<C, Optional<E>> extractor, C valorClave) {
     return e -> extractor.apply(valorClave).ifPresent(t -> {
         throw new ExcepcionDSL("Ya existe una instancia con la misma clave: %s".formatted(valorClave));
@@ -362,7 +363,7 @@ public String crearDepartamento(String codigo, String nombre, String localidad) 
 🤩 Aah, _excelente_ simplificación! 
 
 Y es segura en tipos de datos! Si, por error, escribiéramos `repositorioEmpleado` donde debiera decir 
-`repositorioDepartamento`, el compilador de Java y/o la IDE nos lo harían saber _de inmediato_.
+`repositorioDepartamento`, el compilador de Java y/o la IDE detectarían la discrepancia y se quejarían _de inmediato_.
 
 ### Reflexiones Acerca del Estilo del DSL
 
