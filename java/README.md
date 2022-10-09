@@ -375,7 +375,7 @@ Qué problemas nuevos nos trae?
 
 Uno inmediatamente evidente es que los mensajes de error son demasiado genéricos y no proveen contexto. Donde 
 nuestra versión original solía decir `Ya existe un departamento con codigo 30: Ventas!` ahora nuestro método DSL 
-reporta un críptico `Ya existe una instancia de entidad con el mismo valor de clave: 30`. Claramente, esto podría 
+reporta un críptico `Ya existe una instancia con la misma clave: 30`. Claramente, esto podría 
 mejorar!
 
 Qué problemas no soluciona?
@@ -456,6 +456,9 @@ generar el mensaje de error apropiado para toda posible excepción.
 
 Al final, el nivel superior de la aplicación decide qué hacer cuando hay errores: hacer _logging_, retornar un 
 código HTTP 404, etc.
+
+Para apreciar el uso de patrones funcionales en un DSL Java véase el
+[DSL de repositorios JPA](src/main/java/scott/infra/jpa/RepositorioDSL.java).
 
 Para apreciar el uso del DSL en código "real" véase:
 
