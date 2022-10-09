@@ -13,7 +13,7 @@ interface ManejadorTransacciones {
     + <T> recordar(value: T, undo: (T) -> Unit)
     + deshacerTransaccion()
 }
-ImagenMemoria --> ManejadorTransacciones: keeps integrity through >
+ImagenMemoria --> ManejadorTransacciones: mantiene integridad mediante >
 note bottom of ManejadorTransacciones
         El STM de los pobres: las propiedades mutables participan
         en transacciones de hilo local
@@ -40,7 +40,7 @@ class Transferencia implements Mutacion {
     + aplicarA(banco: Banco)
 }
 Transferencia ..> Cuenta: ...luego decrementa balance >
-Transferencia ..> Cuenta: increments balance >
+Transferencia ..> Cuenta: incrementa balance
 note bottom of Transferencia
     banco[idCuentaHacia].balance += monto
     banco[idCuentaDesde].balance -= monto

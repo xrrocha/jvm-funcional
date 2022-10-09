@@ -4,6 +4,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     name := "scala-srecords",
+    organization := "quito-lambda",
     version := "1.0.0-SNAPSHOT",
 
     scalaVersion := scala3Version,

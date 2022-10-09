@@ -4,8 +4,8 @@ class ImagenMemoria {
     + ejecutarMutacion(mutacion: Mutacion)
     + ejecutarConsulta(consulta: Consulta)
 }
-ImagenMemoria ..> Mutacion: runs >
-ImagenMemoria ..> Consulta: runs >
+ImagenMemoria ..> Mutacion: ejecuta >
+ImagenMemoria ..> Consulta: ejecuta >
 ImagenMemoria --> AlmacenMutaciones: persiste mutaciones con >
 ImagenMemoria --> ManejadorTransacciones: mantiene integridad mediante >
 

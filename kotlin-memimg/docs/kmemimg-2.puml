@@ -38,7 +38,7 @@ class Deposito implements Mutacion {
     + monto: Monto
     + aplicarA(banco: Banco)
 }
-Deposito ..> Cuenta: increments balance >
+Deposito ..> Cuenta: incrementa balance >
 note bottom of Deposito
     banco[idCuenta].balance += monto
 end note

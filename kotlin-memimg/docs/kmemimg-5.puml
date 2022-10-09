@@ -22,7 +22,7 @@ end note
 
 class Banco <<Dominio>> {
 }
-Consulta ..> Banco: reads >
+Consulta ..> Banco: lee >
 
 class Cuenta <<Dominio>> {
     + id: String

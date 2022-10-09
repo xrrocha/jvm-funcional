@@ -12,7 +12,7 @@ interface AlmacenMutaciones {
     adicionar(mutacion: Any)
     <E> reEjecutar(consumidorMutaciones: (E) -> Unit)
 }
-ImagenMemoria --> AlmacenMutaciones: persists commands with >
+ImagenMemoria --> AlmacenMutaciones: persiste mutaciones con >
 note right of AlmacenMutaciones::"adicionar(mutacion: Any)"
     Invalida el procesador cuando hay falla!
     Luego de corregir el error E/S reinicia el procesaor
