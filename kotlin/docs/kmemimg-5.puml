@@ -11,7 +11,7 @@ class ImagenMemoria {
 interface Consulta {
     consultarSobre(sistema: Any): Any?
 }
-ImagenMemoria ..> Consulta: runs multi-threaded >
+ImagenMemoria ..> Consulta: corre en multi-hilo >
 note bottom of Consulta
     // Nombre de cuentas con balance de $70
     banco.accounts.values

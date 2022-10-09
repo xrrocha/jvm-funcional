@@ -74,7 +74,7 @@ tomar ventaja de la imagen en memoria.
 
 Un _procesador de imagen en memoria_ consume una secuencia de mutaciones aplicándolas sucesivamente a un objeto
 mutable en memoria (al que llamaremos _sistema_ empleando la terminología introducida por los pioneros de
-[Prevayler](https://prevayler.org).
+[Prevayler](https://prevayler.org)).
 
 ![kmemimg-1](docs/img/kmemimg-1.png)
 
@@ -84,7 +84,7 @@ que ocuparse de problemas de contención por acceso mutable concurrente. Esto, a
 transaccional tradicionalmente asociada con las transacciones pues los conflictos por mutación concurrentemente, 
 simplemente, no ocurren!
 
-![kmemimg-2](docs/img/kmemimg-2.png))
+![kmemimg-2](docs/img/kmemimg-2.png)
 
 La aplicación de mutaciones individuales, sin embargo, _puede_ fallar en medio de una secuencia de modificaciones. Por
 esta razón el procesador de imagen en memoria todavía es responsable de deshacer cambios parciales en memoria y
@@ -99,13 +99,13 @@ restaure la capacidad de serialización.
 
 ![kmemimg-4](docs/img/kmemimg-4.png)
 
-Por último (y crucialmente!) un procesador de image en memoria también sirve consultas
+Por último (y crucialmente!) un procesador de image en memoria también sirve consultas!
 
 Una _consulta_ es otro tipo de eventos que, a diferencia de las mutaciones, no altera el estado del sistema. Es de
 importancia notar que las consultas se sirven en modo multi-hilo, de forma que interrogar el estado del sistema es
-una operación eficiente y concurrente. Puesto que el acceso a los datos en memoria es tan rápido muchas consultas se
-pueden satisfacer sin necesidad de indexar los datos. Sin embargo, es fácil indexar datos en memoria según sea
-requerido por la aplicación.
+una operación eficiente y concurrente. Puesto que el acceso a los datos en memoria es tan rápido, muchas consultas se
+pueden satisfacer sin necesidad de indexar los datos. Sin embargo, es fácil indexar datos en memoria según 
+lo requiera la aplicación.
 
 ![kmemimg-5](docs/img/kmemimg-5.png)
 
@@ -113,7 +113,7 @@ El siguiente diagrama de clases resume el modelo del procesador de imagen en mem
 
 ![kmemimg](docs/img/kmemimg.png))
 
-👉 Puesto que la reiniciación de la aplicación puede tomar cierto largo cuando hay una larga historia de mutaciones, es
+👉 Puesto que la reiniciación de la aplicación puede tomar cierto cuando hay una larga historia de mutaciones, es
 posible tomar, a demanda, una "fotografía instantánea" en disco del estado del sistema en memoria. Esto posibilita
 reiniciaciones más rápidas a expensas de reducir la capacidad de "viajar en el tiempo" posibilitada por la historia 
 completa de mutaciones.
