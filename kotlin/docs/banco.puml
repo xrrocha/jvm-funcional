@@ -1,0 +1,60 @@
+@startuml
+skinparam class {
+    BackgroundColor<<Dominio>> Wheat
+    BorderColor<<Dominio>> Tomato
+}
+
+interface Mutacion {
+    + aplicarA(sistema: Any)
+}
+
+together {
+    class Banco <<Dominio>> {
+    }
+    class Cuenta <<Dominio>> {
+        + id: String
+        + nombre: String
+        + balance: Monto
+    }
+    Banco "1" *--> "0..*" Cuenta
+}
+
+    interface MutacionBancaria {
+        + aplicarA(banco: Banco)
+    }
+    Mutacion <|-- MutacionBancaria
+    MutacionBancaria ..> Banco: modifica >
+
+class CreateAccount {
+    + id: String
+    + nombre: String
+}
+MutacionBancaria <|.. CreateAccount
+CreateAccount ..> Cuenta: crea >
+
+together {
+    interface MutacionCuenta {
+        + aplicarA(account: Cuenta)
+    }
+    MutacionBancaria <|.. MutacionCuenta
+    MutacionCuenta ..> Cuenta: modifica >
+    class Deposito implements MutacionCuenta {
+        + idCuenta: String
+        + monto: Monto
+    }
+
+    class Retiro implements MutacionCuenta {
+        + idCuenta: String
+        + monto: Monto
+    }
+}
+
+class Transferencia implements MutacionBancaria {
+    + idCuentaDesde: String
+    + idCuentaHacia: String
+    + monto: Monto
+}
+Transferencia ..> Deposito: delega a >
+Transferencia ..> Retiro: delega a >
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+
+class ImagenMemoria {
+    + ejecutarMutacion(mutacion: Mutacion)
+    + ejecutarConsulta(consulta: Consulta)
+}
+ImagenMemoria ..> Mutacion: runs >
+ImagenMemoria ..> Consulta: runs >
+ImagenMemoria --> AlmacenMutaciones: persiste mutaciones con >
+
+interface Mutacion {
+    aplicarA(sistema: Any)
+}
+note bottom of Mutacion
+    // Transfiere $20 entre dos cuentas
+    banco[hacia].balance += 20
+    banco[desde].balance -= 20
+end note
+
+interface Consulta {
+    consultarSobre(sistema: Any): Any?
+}
+note bottom of Consulta
+    // Nombres de cuentas con balance de $70
+    banco.accounts.values
+        .filter { it.balance == 70 }
+        .map { it.nombre }
+        .toSet()
+end note
+interface AlmacenMutaciones {
+    adicionar(event: Any)
+    <E> reEjecutar(eventConsumer: (E) -> Unit)
+}
+note bottom of AlmacenMutaciones
+    - Almacena todas las mutaciones persistentemente
+    - El estado en memoria se reconstruye
+       re-ejecutando los mutacions persistidos
+end note
+
+@enduml

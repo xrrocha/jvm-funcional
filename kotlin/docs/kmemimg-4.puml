@@ -1,0 +1,22 @@
+@startuml
+skinparam class {
+    BackgroundColor<<Dominio>> Wheat
+    BorderColor<<Dominio>> Tomato
+}
+
+class ImagenMemoria {
+    + ejecutarMutacion(mutacion: Mutacion)
+}
+
+interface AlmacenMutaciones {
+    adicionar(event: Any)
+    <E> reEjecutar(eventConsumer: (E) -> Unit)
+}
+ImagenMemoria --> AlmacenMutaciones: persists commands with >
+note right of AlmacenMutaciones::"adicionar(event: Any)"
+    Invalida el procesador cuando hay falla!
+    Luego de corregir el error E/S reinicia el procesaor
+    Requiere recarga de las mutaciones persistidas
+end note
+
+@enduml

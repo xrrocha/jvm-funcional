@@ -1,0 +1,55 @@
+@startuml
+
+class ImagenMemoria {
+    + ejecutarMutacion(mutacion: Mutacion)
+    + ejecutarConsulta(consulta: Consulta)
+}
+ImagenMemoria ..> Mutacion: runs >
+ImagenMemoria ..> Consulta: runs >
+ImagenMemoria --> AlmacenMutaciones: persiste mutaciones con >
+ImagenMemoria --> ManejadorTransacciones: mantiene integridad mediante >
+
+together {
+    interface AlmacenMutaciones {
+        adicionar(event: Any)
+        <E> reEjecutar(eventConsumer: (E) -> Unit)
+    }
+    note bottom of AlmacenMutaciones
+        - Almacena mutacions persistentemente
+        - El estado en memoria se reconstruye
+          re-ejecutando los mutacions persistidos
+    end note
+    interface ManejadorTransacciones {
+        + iniciarTransaccion()
+        + <T> recordar(value: T, undo: (T) -> Unit)
+        + deshacerTransaccion()
+    }
+    note bottom of ManejadorTransacciones
+        El STM de los pobres: las propiedades mutables participan
+        en transacciones de hilo local
+    end note
+}
+
+together {
+    interface Mutacion {
+        aplicarA(sistema: Any)
+    }
+    note bottom of Mutacion
+        // Transferir $20 entre 2 cuentas
+        banco[hacia].balance += 20
+        banco[desde].balance -= 20
+    end note
+
+    interface Consulta {
+        consultarSobre(sistema: Any): Any?
+    }
+    note bottom of Consulta
+        // Nombres de cuentas con balance de $70
+        banco.cuentas.values
+            .filter { it.balance == 70 }
+            .map { it.nombre }
+            .toSet()
+    end note
+}
+
+@enduml

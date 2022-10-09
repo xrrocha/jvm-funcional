@@ -1,0 +1,34 @@
+@startuml
+skinparam class {
+    BackgroundColor<<Dominio>> Wheat
+    BorderColor<<Dominio>> Tomato
+}
+
+class ImagenMemoria {
+    + ejecutarMutacion(mutacion: Mutacion)
+}
+
+interface Consulta {
+    consultarSobre(sistema: Any): Any?
+}
+ImagenMemoria ..> Consulta: runs multi-threaded >
+note bottom of Consulta
+    // Nombre de cuentas con balance de $70
+    banco.accounts.values
+        .filter { it.balance == 70 }
+        .map { it.nombre }
+        .toSet()
+end note
+
+class Banco <<Dominio>> {
+}
+Consulta ..> Banco: reads >
+
+class Cuenta <<Dominio>> {
+    + id: String
+    + nombre: String
+    + balance: Monto
+}
+Banco "1" *--> "0..*" Cuenta
+
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class Banco
+class Cuenta {
+    + id: String
+    + nombre: String
+    + balance: Monto
+}
+Banco "1" *--> "0..*" Cuenta
+@enduml

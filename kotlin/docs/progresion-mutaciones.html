@@ -1,0 +1,181 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Progresión de Mutaciones Bancarias</title>
+    <style>
+        table.historia {
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            padding: 1px;
+            border-style: groove;
+            border-collapse: collapse;
+        }
+
+        th.historia {
+            text-align: center;
+            color: white;
+            background-color: darkblue;
+        }
+
+        td.historia {
+            border: 1px solid black;
+        }
+
+        table.estado {
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid black;
+            border-collapse: collapse;
+            vertical-align: top;
+            background-color: lightgray;
+        }
+
+        td.mutacion {
+            font-weight: bold;
+            color: navy;
+        }
+
+        td.estado, th.estado {
+            color: blue;
+            padding-left: 4px;
+            border: 1px solid black;
+        }
+
+        td.monto {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<table class="historia">
+    <tr>
+        <th class="historia">Mutación</th>
+        <th class="historia">Estado Resultante</th>
+    </tr>
+    <tr>
+        <td class="mutacion"><code>CrearCuenta(id = "janet", nombre = "Janet Doe")</code></td>
+        <td>
+            `
+            <table class="estado">
+                <tr>
+                    <th class="estado">Id</th>
+                    <th class="estado">Nombre</th>
+                    <th class="estado">Balance</th>
+                </tr>
+                <tr>
+                    <td class="estado">janet</td>
+                    <td class="estado">Janet Doe</td>
+                    <td class="estado monto">$0</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="mutacion"><code>Deposito(idCuenta = "janet", monto = 100)</code></td>
+        <td>
+            `
+            <table class="estado">
+                <tr>
+                    <th class="estado">Id</th>
+                    <th class="estado">Nombre</th>
+                    <th class="estado">Balance</th>
+                </tr>
+                <tr>
+                    <td class="estado">janet</td>
+                    <td class="estado">Janet Doe</td>
+                    <td class="estado monto">$100</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="mutacion"><code>Retiro(idCuenta = "janet", monto = 10)</code></td>
+        <td>
+            `
+            <table class="estado">
+                <tr>
+                    <th class="estado">Id</th>
+                    <th class="estado">Nombre</th>
+                    <th class="estado">Balance</th>
+                </tr>
+                <tr>
+                    <td class="estado">janet</td>
+                    <td class="estado">Janet Doe</td>
+                    <td class="estado monto">$90</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="mutacion"><code>CrearCuenta(idCuenta = "john", nombre = "John Doe")</code></td>
+        <td>
+            `
+            <table class="estado">
+                <tr>
+                    <th class="estado">Id</th>
+                    <th class="estado">Nombre</th>
+                    <th class="estado">Balance</th>
+                </tr>
+                <tr>
+                    <td class="estado">janet</td>
+                    <td class="estado">Janet Doe</td>
+                    <td class="estado monto">$90</td>
+                </tr>
+                <tr>
+                    <td class="estado">john</td>
+                    <td class="estado">John Doe</td>
+                    <td class="estado monto">$0</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="mutacion"><code>Deposito(idCuenta = "john", monto = 50)</code></td>
+        <td>
+            `
+            <table class="estado">
+                <tr>
+                    <th class="estado">Id</th>
+                    <th class="estado">Nombre</th>
+                    <th class="estado">Balance</th>
+                </tr>
+                <tr>
+                    <td class="estado">janet</td>
+                    <td class="estado">Janet Doe</td>
+                    <td class="estado monto">$90</td>
+                </tr>
+                <tr>
+                    <td class="estado">john</td>
+                    <td class="estado">John Doe</td>
+                    <td class="estado monto">$50</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="mutacion"><code>Transferencia(idCuentaDesde = "janet", idCuentaHacia = "john", monto = 20)</code></td>
+        <td>
+            `
+            <table class="estado">
+                <tr>
+                    <th class="estado">Id</th>
+                    <th class="estado">Nombre</th>
+                    <th class="estado">Balance</th>
+                </tr>
+                <tr>
+                    <td class="estado">janet</td>
+                    <td class="estado">Janet Doe</td>
+                    <td class="estado monto">$70</td>
+                </tr>
+                <tr>
+                    <td class="estado">john</td>
+                    <td class="estado">John Doe</td>
+                    <td class="estado monto">$70</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

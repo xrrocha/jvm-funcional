@@ -1,0 +1,50 @@
+@startuml
+skinparam class {
+    BackgroundColor<<Dominio>> Wheat
+    BorderColor<<Dominio>> Tomato
+}
+
+class ImagenMemoria {
+    + ejecutarMutacion(mutacion: Mutacion)
+}
+
+interface ManejadorTransacciones {
+    + iniciarTransaccion()
+    + <T> recordar(value: T, undo: (T) -> Unit)
+    + deshacerTransaccion()
+}
+ImagenMemoria --> ManejadorTransacciones: keeps integrity through >
+note bottom of ManejadorTransacciones
+        El STM de los pobres: las propiedades mutables participan
+        en transacciones de hilo local
+end note
+
+interface Mutacion {
+    aplicarA(sistema: Any)
+}
+ImagenMemoria ..> Mutacion: corre en un solo hilo >
+
+class Banco <<Dominio>> {
+}
+class Cuenta <<Dominio>> {
+    + id: String
+    + nombre: String
+    + balance: Monto
+}
+Banco "1" *--> "0..*" Cuenta
+
+class Transferencia implements Mutacion {
+    + idCuentaDesde: String
+    + idCuentaHacia: String
+    + monto: Monto
+    + aplicarA(banco: Banco)
+}
+Transferencia ..> Cuenta: ...luego decrementa balance >
+Transferencia ..> Cuenta: increments balance >
+note bottom of Transferencia
+    banco[idCuentaHacia].balance += monto
+    banco[idCuentaDesde].balance -= monto
+    // kaboom: fondos insuficientes!
+end note
+
+@enduml

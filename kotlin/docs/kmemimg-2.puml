@@ -1,0 +1,46 @@
+@startuml
+skinparam class {
+    BackgroundColor<<Dominio>> Wheat
+    BorderColor<<Dominio>> Tomato
+}
+
+class ImagenMemoria {
+    + ejecutarMutacion(mutacion: Mutacion)
+}
+
+interface AlmacenMutaciones {
+    adicionar(event: Any)
+    <E> reEjecutar(eventConsumer: (E) -> Unit)
+}
+ImagenMemoria --> AlmacenMutaciones: persiste mutaciones con >
+note bottom of AlmacenMutaciones
+    - Almacena todos los mutacions persistentemente
+    - El estado en memoria se reconstruye
+       re-ejecutando las mutaciones persistidas
+end note
+
+interface Mutacion {
+    aplicarA(sistema: Any)
+}
+ImagenMemoria ..> Mutacion: corre en un único hilo >
+
+class Banco <<Dominio>> {
+}
+class Cuenta <<Dominio>> {
+    + id: String
+    + nombre: String
+    + balance: Monto
+}
+Banco "1" *--> "0..*" Cuenta
+
+class Deposito implements Mutacion {
+    + idCuenta: String
+    + monto: Monto
+    + aplicarA(banco: Banco)
+}
+Deposito ..> Cuenta: increments balance >
+note bottom of Deposito
+    banco[idCuenta].balance += monto
+end note
+
+@enduml
