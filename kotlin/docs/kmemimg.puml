@@ -11,8 +11,8 @@ ImagenMemoria --> ManejadorTransacciones: mantiene integridad mediante >
 
 together {
     interface AlmacenMutaciones {
-        adicionar(event: Any)
-        <E> reEjecutar(eventConsumer: (E) -> Unit)
+        adicionar(mutacion: Any)
+        <E> reEjecutar(consumidorMutaciones: (E) -> Unit)
     }
     note bottom of AlmacenMutaciones
         - Almacena mutacions persistentemente

@@ -9,11 +9,11 @@ class ImagenMemoria {
 }
 
 interface AlmacenMutaciones {
-    adicionar(event: Any)
-    <E> reEjecutar(eventConsumer: (E) -> Unit)
+    adicionar(mutacion: Any)
+    <E> reEjecutar(consumidorMutaciones: (E) -> Unit)
 }
 ImagenMemoria --> AlmacenMutaciones: persists commands with >
-note right of AlmacenMutaciones::"adicionar(event: Any)"
+note right of AlmacenMutaciones::"adicionar(mutacion: Any)"
     Invalida el procesador cuando hay falla!
     Luego de corregir el error E/S reinicia el procesaor
     Requiere recarga de las mutaciones persistidas

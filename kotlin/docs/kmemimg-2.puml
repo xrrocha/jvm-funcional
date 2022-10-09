@@ -9,8 +9,8 @@ class ImagenMemoria {
 }
 
 interface AlmacenMutaciones {
-    adicionar(event: Any)
-    <E> reEjecutar(eventConsumer: (E) -> Unit)
+    adicionar(mutacion: Any)
+    <E> reEjecutar(consumidorMutaciones: (E) -> Unit)
 }
 ImagenMemoria --> AlmacenMutaciones: persiste mutaciones con >
 note bottom of AlmacenMutaciones

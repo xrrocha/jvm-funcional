@@ -28,8 +28,8 @@ note bottom of Consulta
         .toSet()
 end note
 interface AlmacenMutaciones {
-    adicionar(event: Any)
-    <E> reEjecutar(eventConsumer: (E) -> Unit)
+    adicionar(mutacion: Any)
+    <E> reEjecutar(consumidorMutaciones: (E) -> Unit)
 }
 note bottom of AlmacenMutaciones
     - Almacena todas las mutaciones persistentemente
