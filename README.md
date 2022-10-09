@@ -1,9 +1,16 @@
 # Lambda Quito: Programación Funcional en la JVM
 
+![tl-dr;](docs/img/tl-dr.png)
 Este repositorio contiene el código y las notas de la presentación
-[Programación Funcional en la Máquina Virtual de Java](https://github.com/xrrocha/jvm-funcional)
+_Programación Funcional en la Máquina Virtual de Java_
 presentada para
-[Quito Lambda](https://www.meetup.com/quito-lambda-meetup/)
+[Quito Lambda](https://www.meetup.com/quito-lambda-meetup/). Contiene tres repositorios con distintos ejemplos 
+prácticos de programación funcional sobre la JVM. Estos repositorios están implementados en Java, Kotlin y Scala.
+El ejemplo en Java es un
+[lenguaje de dominio específico](java/) (DSL) que simplifica el uso de repositorios JPA en aplicaciones SpringBoot.
+El ejemplo en Kotlin es una implementación del 
+[patrón arquitectónico Memory Image](kotlin/).
+El ejemplo en Scala es un [_framework_ de transferencia de datos](scala/).
 
 ## Plataforma Java: Lenguaje, Máquina Virtual y Ecosistema
 

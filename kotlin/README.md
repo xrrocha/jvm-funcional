@@ -1,5 +1,6 @@
 # Imagen en Memoria: Ejemplo de Programación Funcional en Kotlin
 
+![tl-dr;](docs/img/tl-dr.png)
 > Cuando las personas inician el desarrollo de una aplicación empresarial, una de las primeras preguntas que se
 > hacen es "cómo hablamos con la base de datos?". En estos días pueden hacer una pregunta ligeramente diferente:
 > "qué tipo de base de datos deberíamos usar, relacional o una de estas bases de datos NoSql?".
