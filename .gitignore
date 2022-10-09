@@ -1,5 +1,13 @@
+*.iml
+*.ipr
+*.iws
+*.log
 *.swp
 .DS_Store
+.atico/
+.gradle
 .idea/
+build/
+gradle/
+out/
 target/
-local/

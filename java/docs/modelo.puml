@@ -1,0 +1,27 @@
+@startuml
+abstract class Entidad {
+    String id
+}
+class Departamento {
+    String codigo
+    String nombre
+    String localidad
+}
+Entidad <|-- Departamento
+enum Genero {
+    FEMENINO
+    MASCULINO
+}
+class Empleado {
+    String codigo
+    String nombre
+    String cargo
+    LocalDate fechaContratacion
+    BigDecimal salario
+    BigDecimal comision
+}
+Entidad <|-- Empleado
+Genero <-- Empleado
+Departamento <-- Empleado
+Empleado <-- "supervisor" Empleado
+@enduml
