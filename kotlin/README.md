@@ -81,7 +81,7 @@ mutable en memoria (al que llamaremos _sistema_ empleando la terminología intro
 Puesto que la aplicación de comandos de mutación en memoria es tan rápida y barata, el procesador de imagen en
 memoria puede correr en un único hilo! Esto le permite consumir las mutaciones entrantes secuencialmente sin tener
 que ocuparse de problemas de contención por acceso mutable concurrente. Esto, a su vez, remueve mucho de la complejidad
-transaccional tradicionalmente asociada con las transacciones pues los conflictos por mutación concurrentemente, 
+transaccional tradicionalmente asociada con las transacciones pues los conflictos por mutación concurrente, 
 simplemente, no ocurren!
 
 ![kmemimg-2](docs/img/kmemimg-2.png)

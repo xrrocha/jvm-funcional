@@ -44,7 +44,7 @@ Transferencia ..> Cuenta: increments balance >
 note bottom of Transferencia
     banco[idCuentaHacia].balance += monto
     banco[idCuentaDesde].balance -= monto
-    // kaboom: fondos insuficientes!
+    // *** KABOOM: Fondos insuficientes! ***
 end note
 
 @enduml
