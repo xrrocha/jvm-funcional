@@ -16,10 +16,10 @@ class CampoDelimitado[S](nombre: String,
                          extraer: String => S)
   extends CampoEntrada[IndexedSeq[String], S](nombre, is => extraer(is(posicion)))
 
-def campo(nombre: String, posicion: Int): CampoDelimitado[String] =
+def campoDelimitado(nombre: String, posicion: Int): CampoDelimitado[String] =
   CampoDelimitado(nombre, posicion, identity)
 
-def campo[S](nombre: String,
-             posicion: Int,
-             extraer: String => S): CampoDelimitado[S] =
+def campoDelimitado[S](nombre: String,
+                       posicion: Int,
+                       extraer: String => S): CampoDelimitado[S] =
   CampoDelimitado(nombre, posicion, extraer)

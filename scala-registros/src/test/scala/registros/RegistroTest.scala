@@ -2,7 +2,8 @@ package registros
 
 import munit.FunSuite
 
-import java.io.StringReader
+import java.io.{StringReader, StringWriter}
+import java.text.DecimalFormat
 
 class RegistroTest extends FunSuite :
   test("Procesa registros delimitados") {
@@ -12,26 +13,45 @@ class RegistroTest extends FunSuite :
         |john,doe,750
         |""".stripMargin
 
+    val formato = DecimalFormat("000000")
+    val formatear = (valor: Double) => formato.format(valor * 100)
+
     val resultado = copiar(
       leyendoLineas(registros),
       extrayendoCon(
         dalimitadorEntrada(","),
-        campo("nombre", 0),
-        campo("apellido", 1),
-        campo("saldo", 2, _.toDouble),
+        campoDelimitado("nombre", 0),
+        campoDelimitado("apellido", 1),
+        campoDelimitado("saldo", 2, _.toDouble),
       ),
       renombrando(
         "nombre" -> "name",
         "apellido" -> "surname",
         "saldo" -> "balance"
       ),
-      comoLista
+      recolectandoCon(
+        () => Array.fill[Char](24)(' '),
+        new Recolector[Array[Char], String] {
+          private val buffer = StringWriter()
+          override def acumular(item: Array[Char]): Unit =
+            buffer.write(String(item))
+
+          override def completar: String =
+            buffer.toString
+        },
+        campoFijo("name", 0, 8),
+        campoFijo("surname", 8, 8),
+        campoFijo("balance", 16, 6, formatear)
+      )
     )
 
-    assert(resultado == List(
-      Map("name" -> "janet", "surname" -> "doe", "balance" -> 1000.0),
-      Map("name" -> "john", "surname" -> "doe", "balance" -> 750.0),
-    ))
+    val resultadoEsperado = List(
+      "janet   doe     100000  ",
+      "john    doe     075000  ",
+    )
+      .mkString
+
+    assert(resultado == resultadoEsperado)
   }
 
 

@@ -16,3 +16,9 @@ class CampoFijoSalida[E](nombre: String,
       val valor = formatear(registroEntrada(nombre).asInstanceOf[E]).toCharArray
       System.arraycopy(valor, 0, registroSalida, posicion, math.min(valor.length, longitud))
     })
+
+def campoFijo(nombre: String, posicion: Int, longitud: Int): CampoFijoSalida[String] =
+  CampoFijoSalida(nombre, posicion, longitud)
+
+def campoFijo[E](nombre: String, posicion: Int, longitud: Int, formatear: E => String): CampoFijoSalida[E] =
+  CampoFijoSalida(nombre, posicion, longitud, formatear)

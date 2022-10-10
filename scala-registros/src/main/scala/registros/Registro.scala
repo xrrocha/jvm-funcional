@@ -54,7 +54,7 @@ def renombrando(nombres: (String, String)*): Map[String, _] => Map[String, _] =
 class CampoSalida[F](nombre: String, val colocar: (Map[String, _], F) => Unit) extends Campo(nombre)
 
 trait Recolector[F, S]:
-  def adicionar(item: F): S
+  def acumular(item: F): Unit
 
   def completar: S
 end Recolector
@@ -69,7 +69,7 @@ def recolectandoCon[F, S](nuevoRegistroSalida: () => F,
       campos.foreach { campo =>
         campo.colocar(registroEntrada, registroSalida)
       }
-      recolector.adicionar(registroSalida)
+      recolector.acumular(registroSalida)
     }
     recolector.completar
 
