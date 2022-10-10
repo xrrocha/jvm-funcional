@@ -25,12 +25,12 @@ together {
     Mutacion <|-- MutacionBancaria
     MutacionBancaria ..> Banco: modifica >
 
-class CreateAccount {
+class CrearCuenta {
     + id: String
     + nombre: String
 }
-MutacionBancaria <|.. CreateAccount
-CreateAccount ..> Cuenta: crea >
+MutacionBancaria <|.. CrearCuenta
+CrearCuenta ..> Cuenta: crea >
 
 together {
     interface MutacionCuenta {
