@@ -1,5 +1,0 @@
-package srecords
-
-class SRecordsTest {
-
-}

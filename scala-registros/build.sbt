@@ -3,7 +3,7 @@ val scala3Version = "3.2.0"
 lazy val root = project
   .in(file("."))
   .settings(
-    name := "scala-srecords",
+    name := "scala-registros",
     organization := "quito-lambda",
     version := "1.0.0-SNAPSHOT",
 

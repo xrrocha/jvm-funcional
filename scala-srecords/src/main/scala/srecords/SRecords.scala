@@ -1,5 +1,0 @@
-package srecords
-
-object SRecords {
-
-}
