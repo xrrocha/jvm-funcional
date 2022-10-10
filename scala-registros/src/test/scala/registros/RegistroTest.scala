@@ -13,9 +13,6 @@ class RegistroTest extends FunSuite :
         |john,doe,750
         |""".stripMargin
 
-    val formato = DecimalFormat("000000")
-    val formatear = (valor: Double) => formato.format(valor * 100)
-
     val resultado = copiar(
       leyendoLineas(registros),
       extrayendoCon(
@@ -41,7 +38,7 @@ class RegistroTest extends FunSuite :
         },
         campoFijo("name", 0, 8),
         campoFijo("surname", 8, 8),
-        campoFijo("balance", 16, 6, formatear)
+        campoFijo("balance", 16, 6, formatoNumerico("000000", 100))
       )
     )
 

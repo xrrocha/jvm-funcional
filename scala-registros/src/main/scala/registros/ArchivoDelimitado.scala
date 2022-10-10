@@ -1,5 +1,6 @@
 package registros
 
+import java.text.DecimalFormat
 import scala.util.matching.Regex
 
 def separarPorDelimitador(cadena: String, delimitador: Regex): IndexedSeq[String] =
@@ -23,3 +24,7 @@ def campoDelimitado[S](nombre: String,
                        posicion: Int,
                        extraer: String => S): CampoDelimitado[S] =
   CampoDelimitado(nombre, posicion, extraer)
+
+def formatoNumerico(patron: String, multiplier: Int = 1): Number => String =
+  val formato = DecimalFormat(patron)
+  (valor: Number) => formato.format(BigDecimal(valor.toString) * multiplier)
