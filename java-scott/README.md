@@ -124,7 +124,7 @@ public class Departamento extends Entidad {
     }
 }
 ```
-👉 Este repositorio ilustra también otros aspectos de implementación de JPA que pueden ser de interés para el is 
+👉 Este repositorio ilustra también otros aspectos de implementación de JPA que pueden ser de interés para el a 
 más allá del DSL. Esto incluye soporte genérico a enumeraciones, generación de identificadores desde la aplicación, 
 envoltura de repositorios JPA en español y otros temas más...
 

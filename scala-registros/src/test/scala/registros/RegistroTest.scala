@@ -11,21 +11,21 @@ class RegistroTest extends FunSuite :
         |janet,doe,1000
         |john,doe,750
         |""".stripMargin
-    val items = lectorLinea(StringReader(registros.trim))
+    val lector = lectorLinea(StringReader(registros.trim))
 
-    val transformar = constructorMapa(
-      dividir(_, ","),
+    val transformar = constructorMapa[String, IndexedSeq[String]](
+      dividirConDelimitador(_, ","),
       List(
-        campo("nombre", 0),
-        campo("apellido", 1),
-        campo("saldo", 2, _.toInt),
+        campoDelimitado("nombre", 0),
+        campoDelimitado("apellido", 1),
+        campoDelimitado("saldo", 2, _.toDouble),
       )
     )
 
     val reducir: Iterator[Map[String, _]] => Unit =
       i => println(i.mkString(";"))
 
-    transformarReducir(items, transformar, reducir)
+    transformarReducir(lector, transformar, reducir)
   }
 
 

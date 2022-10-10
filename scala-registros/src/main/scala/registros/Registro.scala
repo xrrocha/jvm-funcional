@@ -35,34 +35,50 @@ def mapaRs(rs: ResultSet): Map[String, _] = {
 }
   .toMap
 
-def iteradorRs(rs: ResultSet): Iterator[Map[String, _]] = new Iterator[Map[String, _]] {
+def lectorRs(rs: ResultSet): Iterator[Map[String, _]] = new Iterator[Map[String, _]] {
   override def hasNext: Boolean = rs.next()
 
   override def next(): Map[String, _] = mapaRs(rs)
 }
 
-def dividir(cadena: String, delimitador: Regex): IndexedSeq[String] =
+def dividirConDelimitador(cadena: String, delimitador: Regex): IndexedSeq[String] =
   delimitador.split(cadena).toIndexedSeq
-def dividir(cadena: String, delimitador: String): IndexedSeq[String] =
-  dividir(cadena, delimitador.r)
+def dividirConDelimitador(cadena: String, delimitador: String): IndexedSeq[String] =
+  dividirConDelimitador(cadena, delimitador.r)
 
-trait DivisionFija(posicion: Int, longitud: Int):
-  def extraer(cadena: String): String = cadena.substring(posicion, posicion + longitud)
+class Campo[E, S](val nombre: String,
+                  val extraer: E => S,
+                  val escribir: S => String = (s: S) => s.toString)
 
-def dividir(cadena: String, divisiones: Iterable[DivisionFija]): IndexedSeq[String] =
-  divisiones.map(_.extraer(cadena)).toIndexedSeq
+class CampoDelimitado[S](nombre: String,
+                         indice: Int,
+                         extraer: String => S,
+                         escribir: S => String = (s: S) => s.toString)
+  extends Campo[IndexedSeq[String], S](nombre, is => extraer(is(indice)), escribir)
 
-class Campo[E, S](val nombre: String, val indice: Int, val extraer: E => S)
+def campoDelimitado(nombre: String, indice: Int): CampoDelimitado[String] =
+  CampoDelimitado(nombre, indice, identity, identity)
 
-def campo(nombre: String, indice: Int): Campo[String, String] = Campo(nombre, indice, identity)
-def campo[S](nombre: String, indice: Int, extraer: String => S): Campo[String, S] =
-  Campo[String, S](nombre, indice, extraer)
+def campoDelimitado[S](nombre: String,
+                       indice: Int,
+                       extraer: String => S,
+                       escribir: S => String = (s: S) => s.toString): CampoDelimitado[S] =
+  CampoDelimitado(nombre, indice, extraer, escribir)
 
-def constructorMapa(dividir: String => IndexedSeq[String],
-                    campos: List[Campo[String, _]]): String => Map[String, _] =
-  cadena =>
-    val valores = dividir(cadena)
-    campos.map(campo => (campo.nombre, campo.extraer(valores(campo.indice)))).toMap
+class CampoFijo[S](nombre: String,
+                   posicion: Int,
+                   longitud: Int,
+                   extraer: String => S,
+                   escribir: S => String = (s: S) => s.toString)
+  extends Campo[Array[Char], S](nombre, a => extraer(String(a, posicion, longitud)))
+
+def constructorMapa[E](campos: List[Campo[E, _]]): E => Map[String, _] =
+  constructorMapa(identity, campos)
+def constructorMapa[I, E](dividir: I => E,
+                          campos: List[Campo[E, _]]): I => Map[String, _] =
+  input =>
+    val valoresCampo = dividir(input)
+    campos.map(campo => (campo.nombre, campo.extraer(valoresCampo))).toMap
 
 def renombradorMapa(nombres: List[(String, String)]): Map[String, _] => Map[String, _] =
   mapa =>
@@ -70,7 +86,8 @@ def renombradorMapa(nombres: List[(String, String)]): Map[String, _] => Map[Stri
       .map { case (nombreEntrada, nombreSalida) => (nombreSalida, mapa(nombreEntrada)) }
       .toMap
 
-def transformarReducir[E, S, O](items: => Iterator[E],
+
+def transformarReducir[E, S, O](lector: => Iterator[E],
                                 transformar: E => S,
                                 reducir: Iterator[S] => O): O =
-  reducir(items.map(transformar))
+  reducir(lector.map(transformar))
