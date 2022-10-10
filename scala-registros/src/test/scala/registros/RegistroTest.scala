@@ -15,7 +15,7 @@ class RegistroTest extends FunSuite :
     val resultado = copiar(
       leyendoLineas(registros),
       extrayendoCon(
-        delimitador(","),
+        dalimitadorEntrada(","),
         campo("nombre", 0),
         campo("apellido", 1),
         campo("saldo", 2, _.toDouble),
@@ -25,7 +25,7 @@ class RegistroTest extends FunSuite :
         "apellido" -> "surname",
         "saldo" -> "balance"
       ),
-      reduciendoALista
+      comoLista
     )
 
     assert(resultado == List(
