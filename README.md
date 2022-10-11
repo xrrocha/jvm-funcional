@@ -7,12 +7,12 @@ presentada para
 [Quito Lambda](https://www.meetup.com/quito-lambda-meetup/). Contiene tres repositorios con distintos ejemplos 
 prácticos de programación funcional sobre la JVM. Estos repositorios están implementados en Java, Kotlin y Scala.
 El ejemplo en Java es un
-[DSL orientado a JPA](java-scott/) que simplifica el uso de repositorios en 
+[DSL orientado a JPA](java-scott) que simplifica el uso de repositorios en 
 aplicaciones 
 SpringBoot.
 El ejemplo en Kotlin es una 
-[implementación del patrón _Memory Image_](kotlin-memimg/).
-El ejemplo en Scala es un [utilitario de transferencia de datos](scala-registros/).
+[implementación del patrón _Memory Image_](kotlin-memimg).
+El ejemplo en Scala es un [utilitario de transferencia de datos](scala-registros).
 
 ## Plataforma Java: Lenguaje, Máquina Virtual y Ecosistema
 
