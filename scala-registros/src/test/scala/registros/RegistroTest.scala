@@ -97,14 +97,17 @@ class RegistroTest extends FunSuite :
 
     val resultado = copiar(
       leyendoSql(conexion1, Map.empty,
-        "SELECT upper(id) id, upper(nombre) nombre FROM entrada"),
+        """
+          |SELECT upper(id) id,
+          |       upper(nombre) nombre
+          |FROM entrada""".stripMargin),
       extrayendoSql(
         campoEntradaDB("id"),
         campoEntradaDB("nombre")
       ),
       identity,
       insertandoTabla(Tabla("salida", nombresColumna = "id", "nombre"), 2)
-      (conexion2, Map.empty)
+                     (conexion2, Map.empty)
     )
     assert(resultado == 2)
 
