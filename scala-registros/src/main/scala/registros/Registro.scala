@@ -2,37 +2,19 @@ package registros
 
 import java.io.*
 import java.sql.{Connection, ResultSet}
+import java.text.DecimalFormat
 import scala.util.matching.Regex
 import scala.util.{Try, Using}
 
-def leyendoLineas(lector: Reader): Iterator[String] = new Iterator[String] :
-  private val lectorLinea = BufferedReader(lector)
-  private var linea = lectorLinea.readLine()
-
-  override def hasNext: Boolean = linea != null
-
-  override def next(): String =
-    val lineaAnterior = linea
-    linea = lectorLinea.readLine()
-    lineaAnterior
-def leyendoLineas(is: InputStream): Iterator[String] =
-  leyendoLineas(InputStreamReader(is))
-def leyendoLineas(lineas: String): Iterator[String] =
-  leyendoLineas(StringReader(lineas.trim))
-
-def lectorFijo(longitud: Int, lector: Reader) = new Iterator[String] :
-  private val lectorRegistro = BufferedReader(lector)
-  private val buffer = new Array[Char](longitud)
-  private var caracteresLeidos = lectorRegistro.read(buffer)
-
-  override def hasNext: Boolean = caracteresLeidos >= 0
-
-  override def next(): String =
-    val cadena = String(buffer, 0, caracteresLeidos)
-    caracteresLeidos = lectorRegistro.read(buffer)
-    cadena
-
 trait Campo(val nombre: String)
+
+def formatoNumerico(patron: String, multiplicador: Int = 1): Number => String =
+  val formato = DecimalFormat(patron)
+  (valor: Number) => formato.format(BigDecimal(valor.toString) * multiplicador)
+
+def convertidorNumerico(patron: String, divisor: Int = 1): String => Number =
+  val formato = DecimalFormat(patron)
+  valor => BigDecimal(formato.parse(valor).toString) / divisor
 
 class CampoEntrada[E, S](nombre: String, val extraer: E => S) extends Campo(nombre)
 

@@ -6,7 +6,7 @@ import java.io.{StringReader, StringWriter}
 import java.text.DecimalFormat
 
 class RegistroTest extends FunSuite :
-  test("Procesa registros delimitados") {
+  test("Consume registros delimitados, produce registros fijos") {
     val registros =
       """
         |janet,doe,1000
@@ -17,9 +17,9 @@ class RegistroTest extends FunSuite :
       leyendoLineas(registros),
       extrayendoCon(
         dalimitadorEntrada(","),
-        campoDelimitado("nombre", 0),
-        campoDelimitado("apellido", 1),
-        campoDelimitado("saldo", 2, _.toDouble),
+        campoEntradaDelimitado("nombre", 0),
+        campoEntradaDelimitado("apellido", 1),
+        campoEntradaDelimitado("saldo", 2, _.toDouble),
       ),
       renombrando(
         "nombre" -> "name",
@@ -27,18 +27,11 @@ class RegistroTest extends FunSuite :
         "saldo" -> "balance"
       ),
       recolectandoCon(
-        () => Array.fill[Char](24)(' '),
-        new Recolector[Array[Char], String] {
-          private val buffer = StringWriter()
-          override def acumular(item: Array[Char]): Unit =
-            buffer.write(String(item))
-
-          override def completar: String =
-            buffer.toString
-        },
-        campoFijo("name", 0, 8),
-        campoFijo("surname", 8, 8),
-        campoFijo("balance", 16, 6, formatoNumerico("000000", 100))
+        registroFijo(24),
+        recolectorFijoEnMemoria,
+        campoSalidaFijo("name", 0, 8),
+        campoSalidaFijo("surname", 8, 8),
+        campoSalidaFijo("balance", 16, 6, formatoNumerico("000000", 100))
       )
     )
 
@@ -49,6 +42,47 @@ class RegistroTest extends FunSuite :
       .mkString
 
     assert(resultado == resultadoEsperado)
+  }
+
+  test("Consume registros fijos, produce registros delimitados") {
+
+  val registros = List(
+      "janet   doe     100000  ",
+      "john    doe     075000  ",
+    )
+      .mkString
+
+    val resultado = copiar(
+      leyendoArchivoFijo(24, StringReader(registros)),
+      extrayendoCon(
+        campoFijoEntrada("nombre", 0, 8),
+        campoFijoEntrada("apellido", 8, 8),
+        campoFijoEntrada("saldo", 16, 6, convertidorNumerico("000000", 100))
+      ),
+      renombrando(
+        "nombre" -> "name",
+        "apellido" -> "surname",
+        "saldo" -> "balance"
+      ),
+      recolectandoCon(
+        dalimitadoSalida(3),
+        recolectorDelimitadoEnMemoria(","),
+        campoSalidaDelimitado("name", 0),
+        campoSalidaDelimitado("surname", 1),
+        campoSalidaDelimitado("balance", 2, _.toString),
+      )
+    )
+
+    val resultadoEsperado =
+      """
+        |janet,doe,1000
+        |john,doe,750
+        |""".stripMargin
+
+    assert(resultado.trim == resultadoEsperado.trim)
+  }
+
+  test("Consume y produce registros de base de datos") {
   }
 
 
