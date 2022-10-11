@@ -1,3 +1,3 @@
-### Ejemplo de Programación Funcional en Scala
+### `SRegistros`: Ejemplo de Programación Funcional en Scala
 
 In the works...

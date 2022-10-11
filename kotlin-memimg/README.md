@@ -114,10 +114,10 @@ El siguiente diagrama de clases resume el modelo del procesador de imagen en mem
 
 ![kmemimg](docs/img/kmemimg.png))
 
-👉 Puesto que la reiniciación de la aplicación puede tomar cierto cuando hay una larga historia de mutaciones, es
-posible tomar, a demanda, una "fotografía instantánea" en disco del estado del sistema en memoria. Esto posibilita
-reiniciaciones más rápidas a expensas de reducir la capacidad de "viajar en el tiempo" posibilitada por la historia 
-completa de mutaciones.
+> 👉 Puesto que la reiniciación de la aplicación puede tomar cierto cuando hay una larga historia de mutaciones, es
+> posible tomar, a demanda, una "fotografía instantánea" en disco del estado del sistema en memoria. Esto posibilita
+> reiniciaciones más rápidas a expensas de reducir la capacidad de "viajar en el tiempo" posibilitada por la historia 
+> completa de mutaciones.
 
 ### Procesador de Imagen en Memoria Implementado en Kotlin
 
@@ -162,7 +162,7 @@ class ImagenMemoria(private val sistema: Any,
 }
 ```
 
-👉 Esta implementación utiliza la librería Kotlin de programación funcional [Arrow](https://arrow-kt.io).
+> 👉 Esta implementación utiliza la librería Kotlin de programación funcional [Arrow](https://arrow-kt.io).
 
 ### Ejemplo Simple: Modelo de Dominio Bancario
 

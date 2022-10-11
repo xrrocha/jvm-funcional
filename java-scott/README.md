@@ -124,9 +124,9 @@ public class Departamento extends Entidad {
     }
 }
 ```
-👉 Este repositorio ilustra también otros aspectos de implementación de JPA que pueden ser de interés para el a 
-más allá del DSL. Esto incluye soporte genérico a enumeraciones, generación de identificadores desde la aplicación, 
-envoltura de repositorios JPA en español y otros temas más...
+> 👉 Este repositorio ilustra también otros aspectos de implementación de JPA que pueden ser de interés para el a 
+> más allá del DSL. Esto incluye soporte genérico a enumeraciones, generación de identificadores desde la aplicación, 
+> envoltura de repositorios JPA en español y otros temas más...
 
 
 ### Insertando una Nueva Instancia de Entidad (Toma 1)
@@ -224,8 +224,8 @@ Para impedir que se añadan nuevas instancias con valores duplicados de clave na
 - Se añade una anotación `@Table/@UniqueConstraint` a la entidad JPA 
 - Se verifica en la aplicación Spring que no exista ya en la tabla una fila con el mismo valor de clave natural
 
-👉 En nuestro repositorio de ejemplo hemos establecido la simplificación de que todas las claves primarias sintéticas
-son de tipo `String` y corresponden a un _random `UUID`_ generado desde la aplicación.
+> 👉 En nuestro repositorio de ejemplo hemos establecido la simplificación de que todas las claves primarias sintéticas
+> son de tipo `String` y corresponden a un _random `UUID`_ generado desde la aplicación.
 
 ### Insertando una Nueva Instancia de Entidad (Toma 2)
 
@@ -277,8 +277,8 @@ La creación de una nueva entidad de `Empleado` se verá también aumentada con 
 
 Esto es repetitivo, tedioso y _propenso al error_!
 
-👉 **Una de las principales fuentes de _bugs_ en el desarrollo de aplicaciones son los errores en la transcripción de 
-recetas repetitivas como esta**.
+> 👉 **Una de las principales fuentes de _bugs_ en el desarrollo de aplicaciones son los errores en la transcripción de 
+> recetas repetitivas como esta**.
 
 ### Capturando Recetas Repetitivas
 
@@ -385,11 +385,11 @@ Un problema con nuestro código original es que hace uso muy liberal de las exce
 DSL nos liberara de tener que lidiar continuamente con las excepciones, pero también que nos permitiera ocuparnos 
 apropiadamente de ellas cuando así se requiera.
 
-👉 Algunos programadores Java no verían en esto un problema. Después de todo, las excepciones son el mecanismo estándar 
-del lenguaje para reportar o propagar condiciones de error. Sin embargo, las excepciones rompen el control de flujo
-y, tomadas a la ligera, dificultan lidiar con las condiciones de error. En la práctica, muchos desarrolladores 
-simplemente ignoran las excepciones y las dejan propagar hasta el nivel superior de la aplicación! 
-_Somewhere in the Rytridian Galaxy, Ultra Lord weeps 🥺_
+> 👉 Algunos programadores Java no verían en esto un problema. Después de todo, las excepciones son el mecanismo estándar 
+> del lenguaje para reportar o propagar condiciones de error. Sin embargo, las excepciones rompen el control de flujo
+> y, tomadas a la ligera, dificultan lidiar con las condiciones de error. En la práctica, muchos desarrolladores 
+> simplemente ignoran las excepciones y las dejan propagar hasta el nivel superior de la aplicación! 
+> _Somewhere in the Rytridian Galaxy, Ultra Lord weeps 🥺_
 
 ### El Tipo de Datos `Either` al Rescate!
 
@@ -404,8 +404,8 @@ Una instancia de `Either<L, R>` contiene uno de dos posibles valores:
 - Un valor útil (`R`, por _right_) si la computación que le dió origen completó exitosamente, o
 - Un valor de error (`L`, por _left_) si la computación terminó anormalmente
 
-👉 Que el valor exitoso de `Either` esté a la derecha y no a la izquierda puede resultar contra-intuitivo a algunos
-pero es, simplemente, una convención (originalmente establecida por el lenguaje Haskell).
+> 👉 Que el valor exitoso de `Either` esté a la derecha y no a la izquierda puede resultar contra-intuitivo a algunos
+> pero es, simplemente, una convención (originalmente establecida por el lenguaje Haskell).
 
 Lo interesante del uso de este tipo de datos es que, cuando todos los métodos coinciden en retornar `Either`, es 
 posible encadenarlos en _pipelines_ de transformación que parecerían no tener que ocuparse de posibles errores!
