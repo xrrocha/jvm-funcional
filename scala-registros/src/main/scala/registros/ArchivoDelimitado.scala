@@ -31,16 +31,6 @@ def dalimitadorEntrada(delimitador: String): String => IndexedSeq[String] =
 def dalimitadoSalida(numeroCampos: Int): () => collection.mutable.IndexedSeq[String] =
   () => collection.mutable.IndexedSeq.fill(numeroCampos)("")
 
-def recolectorDelimitadoEnMemoria(delimitador: String) = new Recolector[collection.mutable.IndexedSeq[String], String] {
-  private val escritor = StringWriter()
-
-  override def acumular(item: collection.mutable.IndexedSeq[String]): Unit =
-    escritor.write(item.mkString(delimitador) + "\n")
-
-  override def completar: String =
-    escritor.toString
-}
-
 class CampoEntradaDelimitado[S](nombre: String,
                                 posicion: Int,
                                 extraer: String => S)
@@ -65,3 +55,13 @@ def campoSalidaDelimitado[E](nombre: String, posicion: Int, formatear: E => Stri
   CampoSalidaDelimitado(nombre, posicion, formatear)
 def campoSalidaDelimitado(nombre: String, posicion: Int) =
   CampoSalidaDelimitado[String](nombre, posicion, identity)
+
+def recolectorDelimitadoEnMemoria(delimitador: String) = new Recolector[collection.mutable.IndexedSeq[String], String] {
+  private val escritor = StringWriter()
+
+  override def acumular(item: collection.mutable.IndexedSeq[String]): Unit =
+    escritor.write(item.mkString(delimitador) + "\n")
+
+  override def completar: String =
+    escritor.toString
+}

@@ -8,14 +8,6 @@ import scala.util.{Try, Using}
 
 trait Campo(val nombre: String)
 
-def formatoNumerico(patron: String, multiplicador: Int = 1): Number => String =
-  val formato = DecimalFormat(patron)
-  (valor: Number) => formato.format(BigDecimal(valor.toString) * multiplicador)
-
-def convertidorNumerico(patron: String, divisor: Int = 1): String => Number =
-  val formato = DecimalFormat(patron)
-  valor => BigDecimal(formato.parse(valor).toString) / divisor
-
 class CampoEntrada[E, S](nombre: String, val extraer: E => S) extends Campo(nombre)
 
 def extrayendoCon[I, E](separar: I => E,
@@ -27,6 +19,10 @@ def extrayendoCon[I, E](separar: I => E,
 def extrayendoCon[E](campos: CampoEntrada[E, _]*): E => Map[String, _] =
   input => campos.map(campo => (campo.nombre, campo.extraer(input))).toMap
 
+def formatoNumerico(patron: String, multiplicador: Int = 1): Number => String =
+  val formato = DecimalFormat(patron)
+  (valor: Number) => formato.format(BigDecimal(valor.toString) * multiplicador)
+
 def renombrando(nombres: (String, String)*): Map[String, _] => Map[String, _] =
   mapa =>
     nombres
@@ -34,6 +30,10 @@ def renombrando(nombres: (String, String)*): Map[String, _] => Map[String, _] =
       .toMap
 
 class CampoSalida[F](nombre: String, val colocar: (Map[String, _], F) => Unit) extends Campo(nombre)
+
+def convertidorNumerico(patron: String, divisor: Int = 1): String => Number =
+  val formato = DecimalFormat(patron)
+  valor => BigDecimal(formato.parse(valor).toString) / divisor
 
 trait Recolector[F, S]:
   def acumular(item: F): Unit
@@ -57,6 +57,7 @@ def recolectandoCon[F, S](nuevoRegistroSalida: () => F,
 
 
 def comoLista[A]: Iterator[A] => List[A] = _.toList
+
 def copiar[E, S](leer: => Iterator[E],
                  extraer: E => Map[String, _],
                  transformar: Map[String, _] => Map[String, _],

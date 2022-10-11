@@ -2,6 +2,19 @@ package registros
 
 import java.io.{BufferedReader, Reader, StringWriter, Writer}
 
+class CampoEntradaFijo[S](nombre: String,
+                          posicion: Int,
+                          longitud: Int,
+                          convertir: String => S)
+  extends CampoEntrada[Array[Char], S](
+    nombre,
+    a => convertir(String(a, posicion, longitud).trim))
+
+def campoEntradaFijo[E](nombre: String, posicion: Int, longitud: Int, convertir: String => E) =
+  CampoEntradaFijo(nombre, posicion, longitud, convertir)
+def campoEntradaFijo(nombre: String, posicion: Int, longitud: Int) =
+  CampoEntradaFijo(nombre, posicion, longitud, identity)
+
 def leyendoArchivoFijo(longitud: Int, lector: Reader) = new Iterator[Array[Char]] :
   private val lectorRegistro = BufferedReader(lector)
   private val buffer = new Array[Char](longitud)
@@ -15,19 +28,6 @@ def leyendoArchivoFijo(longitud: Int, lector: Reader) = new Iterator[Array[Char]
     caracteresLeidos = lectorRegistro.read(buffer)
     cadena
 
-class CampoFijoEntrada[S](nombre: String,
-                          posicion: Int,
-                          longitud: Int,
-                          convertir: String => S)
-  extends CampoEntrada[Array[Char], S](
-    nombre,
-    a => convertir(String(a, posicion, longitud).trim))
-
-def campoFijoEntrada[E](nombre: String, posicion: Int, longitud: Int, convertir: String => E) =
-  CampoFijoEntrada(nombre, posicion, longitud, convertir)
-def campoFijoEntrada(nombre: String, posicion: Int, longitud: Int) =
-  CampoFijoEntrada(nombre, posicion, longitud, identity)
-
 class CampoSalidaFijo[E](nombre: String,
                          posicion: Int,
                          longitud: Int,
@@ -38,6 +38,12 @@ class CampoSalidaFijo[E](nombre: String,
       val valor = formatear(registroEntrada(nombre).asInstanceOf[E]).toCharArray
       System.arraycopy(valor, 0, registroSalida, posicion, math.min(valor.length, longitud))
     })
+
+def campoSalidaFijo(nombre: String, posicion: Int, longitud: Int): CampoSalidaFijo[String] =
+  CampoSalidaFijo(nombre, posicion, longitud)
+
+def campoSalidaFijo[E](nombre: String, posicion: Int, longitud: Int, formatear: E => String): CampoSalidaFijo[E] =
+  CampoSalidaFijo(nombre, posicion, longitud, formatear)
 
 def registroFijo(longitud: Int): () => Array[Char] =
   () => Array.fill[Char](longitud)(' ')
@@ -51,9 +57,3 @@ def recolectorFijoEnMemoria = new Recolector[Array[Char], String] {
   override def completar: String =
     escritor.toString
 }
-
-def campoSalidaFijo(nombre: String, posicion: Int, longitud: Int): CampoSalidaFijo[String] =
-  CampoSalidaFijo(nombre, posicion, longitud)
-
-def campoSalidaFijo[E](nombre: String, posicion: Int, longitud: Int, formatear: E => String): CampoSalidaFijo[E] =
-  CampoSalidaFijo(nombre, posicion, longitud, formatear)

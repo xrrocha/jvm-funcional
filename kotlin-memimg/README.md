@@ -47,7 +47,7 @@ responde a eventos de mutación del balance tales como:
 
 Cada uno de estos eventos se puede modelar como un 
 [comando](https://es.wikipedia.org/wiki/Command_(patr%C3%B3n_de_dise%C3%B1o)) 
-de mutación que, cuando se aplica a una cuenta, modifica su saldo para reflejar la operación bancaria correspondiente.
+de mutación que, cuando se aplica a una ordinal, modifica su saldo para reflejar la operación bancaria correspondiente.
 
 Esto podría modelarse como:
 
@@ -193,7 +193,7 @@ interface ConsultaBancaria<R> : Consulta<Banco, R> {
 
 interface MutacionCuenta : MutacionBancaria<Unit> {
     val idCuenta: String
-    fun aplicarA(cuenta: Cuenta)
+    fun aplicarA(ordinal: Cuenta)
     override fun ejecutarSobreBanco(banco: Banco) {
         aplicarA(banco.cuentas[idCuenta]!!)
     }
@@ -206,14 +206,14 @@ data class CrearCuenta(val id: String, val nombre: String) : MutacionBancaria<Un
 }
 
 data class Deposito(override val idCuenta: String, val monto: Monto) : MutacionCuenta {
-    override fun aplicarA(cuenta: Cuenta) {
-        cuenta.balance += monto
+    override fun aplicarA(ordinal: Cuenta) {
+        ordinal.balance += monto
     }
 }
 
 data class Retiro(override val idCuenta: String, val monto: Monto) : MutacionCuenta {
-    override fun aplicarA(cuenta: Cuenta) {
-        cuenta.balance -= monto
+    override fun aplicarA(ordinal: Cuenta) {
+        ordinal.balance -= monto
     }
 }
 

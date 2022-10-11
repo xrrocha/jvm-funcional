@@ -244,7 +244,7 @@ public static void main(
   .map(Matcher::group)
   // Uniformiza a minúscula
   .map(String::toLowerCase)
-  // Crea mapa palabra/cuenta      
+  // Crea mapa palabra/ordinal      
   .collect(groupingBy(
     identity(), counting())) 
   // Ordena #ocurrencias desc
