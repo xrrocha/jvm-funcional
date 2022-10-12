@@ -5,7 +5,7 @@ Este repositorio ilustra el diseño, implementación y uso de un lenguaje de dom
 para copiar datos desde/hacia bases de datos, archivos planos, servidores y otros formatos.
 Para ello se emplean patrones funcionales simples alrededor de una simplificación del modelo _map/reduce_.
 
-### Copia de Registros
+### _Map/Reduce_
 
 La idea esencial de la operación _map/reduce_ es muy simple: un generador produce una secuencia de ítems de datos que 
 son subsiguientemente transformados (_map_) y luego agregados (_reduce_) en un resultado final. Una formulación 
