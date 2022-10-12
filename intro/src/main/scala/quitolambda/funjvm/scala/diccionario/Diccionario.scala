@@ -5,10 +5,8 @@ import scala.util.Using.resource
 object Diccionario:
   val Espacios = "\\s+".r
   val Palabras = "\\p{IsLatin}+".r
-
-  val Omitidas = Set(
-    "a", "como", "con", "de", "del", "el", "en", "es", "la", "las", "más", "para", "por",
-    "que", "se", "un", "una", "y")
+  val Omitidas = Set("a", "como", "con", "de", "del", "el", "en", "es", "la", "las", "más", "para", "por",
+                     "que", "se", "un", "una", "y")
 
   @main
   def imprimir(archivos: String*) =

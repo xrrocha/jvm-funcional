@@ -14,7 +14,8 @@ public class Diccionario {
     public static void main(String[] args) {
         final var espacios = Pattern.compile("\\s+");
         final var palabras = Pattern.compile("\\p{IsLatin}+");
-        final var omitidas = Set.of("a", "como", "con", "de", "del", "el", "en", "es", "la", "las", "más", "para", "por", "que", "se", "un", "una", "y");
+        final var omitidas = Set.of("a", "como", "con", "de", "del", "el", "en", "es", "la", "las", "más", "para",
+                                    "por", "que", "se", "un", "una", "y");
         Arrays.stream(args)
                 .flatMap(::leerArchivo)
                 .flatMap(linea -> Arrays.stream(espacios.split(linea)))

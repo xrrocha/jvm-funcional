@@ -1,4 +1,4 @@
-# Lambda Quito: Programación Funcional en la JVM
+# Quito Lambda: Programación Funcional en la JVM
 
 ![tl-dr;](docs/img/tl-dr.png)
 Este repositorio contiene el código y las notas de la presentación YouTube
