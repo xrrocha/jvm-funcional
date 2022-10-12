@@ -6,6 +6,11 @@ import java.text.DecimalFormat
 import scala.util.matching.Regex
 import scala.util.{Try, Using}
 
+def copiar[E, S](leer: => Iterator[E],
+                 extraer: E => Map[String, _],
+                 transformar: Map[String, _] => Map[String, _],
+                 recolectar: Iterator[Map[String, _]] => S): S =
+  recolectar(leer.map(extraer.andThen(transformar)))
 trait Campo(val nombre: String)
 
 class CampoEntrada[E, S](nombre: String, val extraer: E => S) extends Campo(nombre)
@@ -57,9 +62,3 @@ def recolectandoCon[F, S](nuevoRegistroSalida: () => F,
 
 
 def comoLista[A]: Iterator[A] => List[A] = _.toList
-
-def copiar[E, S](leer: => Iterator[E],
-                 extraer: E => Map[String, _],
-                 transformar: Map[String, _] => Map[String, _],
-                 recolectar: Iterator[Map[String, _]] => S): S =
-  recolectar(leer.map(extraer.andThen(transformar)))

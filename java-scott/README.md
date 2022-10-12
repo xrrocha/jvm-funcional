@@ -1,4 +1,4 @@
-# Scott: Un Ejemplo de DSL Funcional en Java
+# Scott: Ejemplo de DSL Funcional en Java
 
 ![tl-dr;](docs/img/tl-dr.png)
 Este repositorio ilustra el diseño, implementación y uso de un lenguaje de dominio específico (DSL) en Java 17
