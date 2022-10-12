@@ -205,8 +205,8 @@ def leyendoLineas(lector: Reader): Iterator[String] = new Iterator[String] :
 Como se aprecia, la función `leyendoLineas` es un adaptador que _transforma_ un archivo en un iterador de las líneas 
 contenidas en ese archivo.
 
-En este mismo espíritu, la función `extrayendoCon` genera sintetiza una función que transforma las líneas retornadas 
-por `leyendoLineas` en registros de tipo `Map[String, _]`:
+En este mismo espíritu, la función `extrayendoCon` sintetiza una función que transforma las líneas retornadas por 
+`leyendoLineas` en registros de tipo `Map[String, _]`:
 
 ```scala
 extrayendoCon(
