@@ -45,7 +45,8 @@ val compras = List(
 
 val totalCompras = mapReduce(
   generar = compras.iterator,
-  transformar = compra => compra.cantidad * compra.precioUnitario,
+  transformar = 
+    compra => compra.cantidad * compra.precioUnitario,
   reducir = _.sum
 )
 
