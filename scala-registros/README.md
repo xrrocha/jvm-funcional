@@ -81,8 +81,8 @@ variedad de destinos y formatos.
 Esto hace necesario definir un _formato intermedio_ uniformemente generado por los lectores y consumido por los 
 escritores. 
 
-> 👉 De esta forma, dados `M` formatos de entrada y `N` formatos de salida necesitaremos solo `M + N` combinaciones 
-> en vez de `M * N`!
+> 👉 De esta forma, dados `M` formatos de entrada y `N` formatos de salida necesitaremos solo `M+N` combinaciones 
+> en vez de `M*N`!
 
 Llamaremos a este formato intermedio _registro_ y lo representaremos como un mapa de nombres de campo a valores de 
 campo. Simbólicamente:
@@ -106,3 +106,123 @@ def copiar[E, S](leer: => Iterator[E],
                  recolectar: Iterator[Map[String, _]] => S): S =
   recolectar(leer.map(extraer.andThen(transformar)))
 ```
+
+Para ilustrar el tipo de DSL declarativo que queremos formular consideremos el requerimiento de convertir el 
+siguiente archivo delimitado `personas.csv`:
+
+```
+janet,doe,1000.25
+john,doe,750.5
+```
+
+en el siguiente archivo de longitud fija `personas.dat`:
+
+```
+janet   doe     100025
+john    doe     075050
+```
+
+Esta transformación se formularía como:
+
+```scala
+copiar(
+      leyendoLineas(File("personas.csv")),
+  
+      extrayendoCon(
+        delimitadorEntrada(","),
+        campoEntradaDelimitado("nombre", posicion = 0),
+        campoEntradaDelimitado("apellido", 1),
+        campoEntradaDelimitado("saldo", 2, extraer = _.toDouble),
+      ),
+  
+      recolectandoCon(
+        registroFijo(longitud = 24),
+        recolectorFijo(File("personas.dat")),
+        campoSalidaFijo("nombre", posicion = 0, longitud = 8),
+        campoSalidaFijo("apellido", 8, 8),
+        campoSalidaFijo("saldo", 16, 6, colocar = formatoNumerico("000000", 100))
+      )
+)
+```
+
+
+### Funciones de Dominio Específico
+
+En el ejemplo anterior, los argumentos pasados como gerundios (`leyendLineas`, `extrayendoCon`, `recolectandoCon`) 
+invocan _funciones de orden superior_ que construyen y retornan otras funciones (aquellas que la función `copiar`
+espera como argumentos).
+
+> 👉 El patrón de escribir funciones que retornan otras funciones es muy común en programación funcional 
+>    pero no lo es (todavía) en la programación orientada a objetos, si bien es el del todo posible.
+
+Estas funciones de orden superior son las que definen el lenguaje de dominio específico como tal. 
+
+La responsabilidad primaria de estas funciones es aquella de traducir el _qué_ al _cómo_. Esto le permite al
+desarrollador _declarar_ qué quiere lograr en vez de _deletrear_ cómo debe hacerse.
+
+Consideremos la función `leyendoLineas` utilizada en el ejemplo anterior:
+
+```scala
+copiar(
+    leer = leyendoLineas(java.io.File("personas.csv")),
+    . . .
+)
+```
+
+Recordemos que el argumento `leer` de la función `copiar` es una función que retorna un iterador de ítems de entrada: 
+`=> Iterator[E]`
+
+Así, pues, la función `leyendoLineas` retorna otra función que, al ser finalmente invocada, retorna un iterador de 
+ítems de entrada. 
+
+Cuántos niveles de indirección! 😉
+
+Pero es en esta indirección donde reside el poder de la composición funcional: posiblita manipular las funciones como 
+datos y combinarlas selectivamente para lograr efectos que, implementados de forma imperativa, requerirían 
+repetición mecánica de código y "juiciosa aplicación de patrones de diseño".
+
+Afortunadamente, la sintaxis _call by name_ de Scala permite definir estas funciones de manera que retornen 
+directamente los valores esperados.  
+
+Veamos:
+
+```scala
+def leyendoLineas(archivo: File): Iterator[String] =
+  leyendoLineas(FileReader(archivo))
+
+def leyendoLineas(lector: Reader): Iterator[String] = new Iterator[String] :
+    private val lectorLineas = BufferedReader(lector)
+    private var linea = lectorLineas.readLine()
+    
+    override def hasNext: Boolean = linea != null
+    
+    override def next(): String =
+        val lineaAnterior = linea
+        linea = lectorLineas.readLine()
+        lineaAnterior
+```
+
+Como se aprecia, la función `leyendoLineas` es un adaptador que _transforma_ un archivo en un iterador de las líneas 
+contenidas en ese archivo.
+
+En este mismo espíritu, la función `extrayendoCon` genera sintetiza una función que transforma las líneas retornadas 
+por `leyendoLineas` en registros de tipo `Map[String, _]`:
+
+```scala
+extrayendoCon(
+    delimitadorEntrada(","),
+    campoEntradaDelimitado("nombre", posicion = 0),
+    campoEntradaDelimitado("apellido", 1),
+    campoEntradaDelimitado("saldo", 2, extraer = _.toDouble),
+)
+```
+
+> 👉 Esta es una de las más importantes diferencias entre los estilos imperativo y funcional: 
+> donde el programador imperativo _instruye_ al computador, en tiempo de compilación, para que este ejecute una serie 
+> estática de pasos,
+> el programador funcional usa una formulación declarativa para _derivar_, en tiempo de ejecución, los pasos que el 
+> computador finalmente debe ejecutar.
+
+
+
+
