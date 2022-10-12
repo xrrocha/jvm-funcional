@@ -11,6 +11,12 @@ def copiar[E, S](leer: => Iterator[E],
                  transformar: Map[String, _] => Map[String, _],
                  recolectar: Iterator[Map[String, _]] => S): S =
   recolectar(leer.map(extraer.andThen(transformar)))
+
+def copiar[E, S](leer: => Iterator[E],
+                 extraer: E => Map[String, _],
+                 recolectar: Iterator[Map[String, _]] => S): S =
+  copiar(leer, extraer, identity, recolectar)
+
 trait Campo(val nombre: String)
 
 class CampoEntrada[E, S](nombre: String, val extraer: E => S) extends Campo(nombre)

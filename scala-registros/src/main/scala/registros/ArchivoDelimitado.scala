@@ -25,7 +25,7 @@ def separarPorDelimitador(cadena: String, delimitador: Regex): IndexedSeq[String
 def separarPorDelimitador(cadena: String, delimitador: String): IndexedSeq[String] =
   separarPorDelimitador(cadena, delimitador.r)
 
-def dalimitadorEntrada(delimitador: String): String => IndexedSeq[String] =
+def delimitadorEntrada(delimitador: String): String => IndexedSeq[String] =
   separarPorDelimitador(_, delimitador)
 
 def dalimitadoSalida(numeroCampos: Int): () => collection.mutable.IndexedSeq[String] =

@@ -18,20 +18,20 @@ class RegistroTest extends FunSuite :
     val resultado = copiar(
       leyendoLineas(registros),
       extrayendoCon(
-        dalimitadorEntrada(","),
+        delimitadorEntrada(","),
         campoEntradaDelimitado("nombre", 0),
         campoEntradaDelimitado("apellido", 1),
         campoEntradaDelimitado("saldo", 2, _.toDouble),
       ),
       renombrando(
-        "nombre" -> "nombre",
+        "nombre" -> "name",
         "apellido" -> "surname",
         "saldo" -> "balance"
       ),
       recolectandoCon(
         registroFijo(24),
         recolectorFijoEnMemoria,
-        campoSalidaFijo("nombre", 0, 8),
+        campoSalidaFijo("name", 0, 8),
         campoSalidaFijo("surname", 8, 8),
         campoSalidaFijo("balance", 16, 6, formatoNumerico("000000", 100))
       )
