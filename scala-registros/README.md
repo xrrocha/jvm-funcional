@@ -145,7 +145,6 @@ copiar(
 )
 ```
 
-
 ### Funciones de Dominio Específico
 
 En el ejemplo anterior, los argumentos pasados como gerundios (`leyendLineas`, `extrayendoCon`, `recolectandoCon`) 
@@ -206,7 +205,7 @@ Como se aprecia, la función `leyendoLineas` es un adaptador que _transforma_ un
 contenidas en ese archivo.
 
 En este mismo espíritu, la función `extrayendoCon` sintetiza una función que transforma las líneas retornadas por 
-`leyendoLineas` en registros de tipo `Map[String, _]`:
+`leyendoLineas` en registros de tipo `Map[String, _]` separando campos dado un delimitador:
 
 ```scala
 extrayendoCon(
@@ -222,6 +221,15 @@ extrayendoCon(
 > estática de pasos,
 > el programador funcional usa una formulación declarativa para _derivar_, en tiempo de ejecución, los pasos que el 
 > computador finalmente debe ejecutar.
+
+### Más Funciones de Dominio Específico
+
+Para añadir un nuevo formato de datos (base de datos relacional, servidor ftp o http, libros Excel, etc.) basta con 
+definir sus tipos de datos de entrada y salda 
+
+```scala
+
+```
 
 
 

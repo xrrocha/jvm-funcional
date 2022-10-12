@@ -371,7 +371,6 @@ fun main(args: Array<String>) {
     .forEach(::println)
 }
 ```
-## Conclusiones
 
 
 

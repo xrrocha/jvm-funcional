@@ -93,20 +93,19 @@ class RegistroTest extends FunSuite :
         |""".stripMargin
     )
     val conexion2 = conexion("test2",
-      "CREATE TABLE salida(id VARCHAR(1), nombre VARCHAR(16));")
+      "CREATE TABLE salida(id VARCHAR(1), name VARCHAR(16));")
 
     val resultado = copiar(
       leyendoSql(conexion1, Map.empty,
         """
           |SELECT upper(id) id,
-          |       upper(nombre) nombre
+          |       upper(nombre) name
           |FROM entrada""".stripMargin),
       extrayendoSql(
         campoEntradaDB("id"),
-        campoEntradaDB("nombre")
+        campoEntradaDB("name")
       ),
-      identity,
-      insertandoTabla(Tabla("salida", nombresColumna = "id", "nombre"), 2)
+      insertandoTabla(Tabla("salida", nombresColumna = "id", "name"), 2)
                      (conexion2, Map.empty)
     )
     assert(resultado == 2)
@@ -117,8 +116,8 @@ class RegistroTest extends FunSuite :
         .map(rs2Map)
         .toSet
     assert(mapaResultado == Set(
-      Map("id" -> "1", "nombre" -> "JANET DOE"),
-      Map("id" -> "2", "nombre" -> "JOHN DOE"),
+      Map("id" -> "1", "name" -> "JANET DOE"),
+      Map("id" -> "2", "name" -> "JOHN DOE"),
     ))
   }
 
